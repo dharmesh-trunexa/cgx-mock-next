@@ -19,11 +19,14 @@ export default function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/api/login", {
-        email,
-        password,
-      });
-      setToken(res.data.token);
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_WS_URL}/api/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
+      setToken(res.data.session.token);
       router.push("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
